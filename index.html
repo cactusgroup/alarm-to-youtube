@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>YT Alarm Clock</title>
+        <style type="text/css">
+            label {
+                display: inline-block;
+                width: 18%;
+            }
+            input {
+                display: inline-block;
+                width: 80%;
+                margin:0;
+                padding:0;
+                font-size: 50pt;
+            }
+            input#videourl {
+                font-size: 10pt;
+            }
+            p.suggestion {
+                background-color: #2bec8c;
+                padding: 0;
+                margin: 0;
+            }
+            h2 {
+                margin-bottom: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="time"></h1>
+        <label for="alarmTime">Alarm time:</label>
+        <input id="alarmTime" type="time" />
+        <label for="videourl">Paste YT url here:</label>
+        <input id="videourl" type="text" />
+
+        <h2>Try these</h2>
+        <p class="suggestion">https://music.youtube.com/watch?v=iAQO1eS0BW4&list=OLAK5uy_kME_Vve-IK02U4WQTyub4lYzaaXrg92Nw</p>
+        <p class="suggestion">https://music.youtube.com/watch?v=ZMWGU8vL_f8&list=OLAK5uy_mAq3pd451oz0RND70mVljomCmoKhyvsXI</p>
+        <p class="suggestion">https://music.youtube.com/watch?v=tILVgRcKHgM&list=OLAK5uy_mAq3pd451oz0RND70mVljomCmoKhyvsXI</p>
+        <p class="suggestion">https://music.youtube.com/watch?v=tAGnKpE4NCI&list=OLAK5uy_mcL5K5E9IHM5GPQ-8AyzPM7JgQMMn1uhs</p>
+        <p class="suggestion">https://music.youtube.com/watch?v=CD-E-LDc384&list=OLAK5uy_mcL5K5E9IHM5GPQ-8AyzPM7JgQMMn1uhs</p>
+        <p class="suggestion">https://music.youtube.com/watch?v=FIYwZ8VsKqM&list=OLAK5uy_kQOIakwdvoPD1skyFHT-EQKXQU1e7rGqw</p>
+
+        <script type="text/javascript">
+            let id = setInterval(()=>{
+                let lpad = (x) => {
+                    return (x > -1 && x < 10) ?
+                        '0' + x :
+                        x;
+                };
+
+                let text = document.getElementById("videourl").value;
+                // console.log(text);
+
+                let date = new Date();
+                document.getElementById("time").innerText = date.toString();
+                // console.log(date);
+                
+                let alarmValue = (
+                    date.getFullYear() + "-" + lpad(date.getMonth() + 1) + "-" + lpad(date.getDate()) +
+                    "T" +
+                    document.getElementById("alarmTime").value + ":00"
+                );
+                let alarm = new Date(alarmValue);
+                // console.log(alarmValue + '\t' + alarm);
+                
+                if (
+                    date.getHours() >= alarm.getHours() &&
+                    date.getMinutes() >= alarm.getMinutes() &&
+                    date.getSeconds() > alarm.getSeconds()
+                ) {
+                    clearInterval(id);
+                    window.location = text;
+                }
+            }, 1000);
+        </script>
+    </body>
+</html>
